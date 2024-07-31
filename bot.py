@@ -43,7 +43,7 @@ async def books(message: types.Message):
         await message.answer('Uzr Xatolik yuz berdi')
 
 
-@dp.callback_query_handler()
+@dp.callback_query_handler(lambda query: query.data.startswith('book_'))
 async def callback(query: types.CallbackQuery):
     await query.answer('Salomu-alaykum')
     try:
@@ -66,10 +66,6 @@ async def callback(query: types.CallbackQuery):
     except Exception as e:
         logging.error(f"Error in book_details handler: {e}")
         await bot.send_message(chat_id=query.from_user.id, text="An error occurred. Please try again later.")
-
-@dp.callback_query_handler()
-async def show_menu(callback_query: types.CallbackQuery):
-    print(callback_query.data)
 
 
 @dp.callback_query_handler(lambda c: c.data == 'back_to_books')
